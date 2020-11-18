@@ -1,0 +1,193 @@
+---
+swagger: "2.0"
+info:
+  x-ibm-name: "mobile-app"
+  title: "mobile-app"
+  version: "1.0.0"
+schemes:
+- "https"
+host: "$(catalog.host)"
+basePath: "/mobile-app"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+securityDefinitions:
+  clientIdSecret:
+    type: "apiKey"
+    description: ""
+    in: "header"
+    name: "X-IBM-Client-Secret"
+  clientIdHeader:
+    type: "apiKey"
+    in: "header"
+    name: "X-IBM-Client-Id"
+    description: "sgarg"
+security:
+- clientIdHeader: []
+  clientIdSecret: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - operation-switch:
+        title: "operation-switch"
+        case:
+        - operations:
+          - verb: "get"
+            path: "/v1/versions"
+          execute:
+          - switch:
+              title: "switch"
+              case:
+              - condition: "$(message.headers.Mock)==\"true\""
+                execute:
+                - set-variable:
+                    title: "set-variable"
+                    actions:
+                    - set: "message.body"
+                      value: "{   \"SupportedVersions\": [     {  \"OperatingSystemName\"\
+                        \ : \"iOS\",             \"OperatingSystemVersion\" : \"1.0\"\
+                        ,             \"MobileAppVersion\" : \"1.0\",            \
+                        \ \"APIVersion\" : \"1.0\"      }, \t{     \"OperatingSystemName\"\
+                        \ : \"Android\",             \"OperatingSystemVersion\" :\
+                        \ \"1.0\",             \"MobileAppVersion\" : \"1.0\",   \
+                        \          \"APIVersion\" : \"1.0\"     }   ],   \"TermsConditionsVersion\"\
+                        : 1 }"
+                    - set: "message.headers.content-type"
+                      value: "application/json"
+                    version: "1.0.0"
+              - otherwise:
+                - set-variable:
+                    title: "set-variable"
+                    actions:
+                    - set: "message.body"
+                      value: "{\"Message\":\"Target system not available\"}"
+                    - set: "message.status.code"
+                      value: "500"
+                    - set: "message.headers.content-type"
+                      value: "application/json"
+                    version: "1.0.0"
+              version: "1.0.0"
+        - operations:
+          - verb: "post"
+            path: "/v1/versions"
+          execute:
+          - validate:
+              title: "validate"
+              version: "1.0.0"
+              definition: "request"
+          - switch:
+              title: "switch"
+              case:
+              - condition: "$(message.headers.Mock)==\"true\""
+                execute:
+                - set-variable:
+                    title: "set-variable"
+                    actions:
+                    - set: "message.status.code"
+                      value: "201"
+                    version: "1.0.0"
+              - otherwise:
+                - set-variable:
+                    title: "set-variable"
+                    actions:
+                    - set: "message.body"
+                      value: "{\"Message\":\"Target system not available\"}"
+                    - set: "message.status.code"
+                      value: "500"
+                    - set: "message.headers.content-type"
+                      value: "application/json"
+                    version: "1.0.0"
+              version: "1.0.0"
+        otherwise: []
+        version: "1.0.0"
+    catch: []
+  phase: "realized"
+paths:
+  /v1/versions:
+    get:
+      responses:
+        200:
+          description: "200 OK"
+          schema:
+            $ref: "#/definitions/Response"
+    post:
+      responses:
+        201:
+          description: "201 CREATED"
+          schema:
+            type: "string"
+      parameters:
+      - name: "request"
+        required: true
+        in: "body"
+        schema:
+          $ref: "#/definitions/request"
+    parameters:
+    - name: "Mock"
+      type: "boolean"
+      required: true
+      in: "header"
+definitions:
+  Response:
+    required:
+    - "SupportedVersions"
+    - "TermsConditionsVersion"
+    type: "object"
+    properties:
+      SupportedVersions:
+        type: "array"
+        items:
+          required:
+          - "OperatingSystemName"
+          - "OperatingSystemVersion"
+          - "MobileAppVersion"
+          - "APIVersion"
+          properties:
+            OperatingSystemName:
+              enum:
+              - "Android"
+              - "iOS"
+              type: "string"
+            OperatingSystemVersion:
+              type: "string"
+            MobileAppVersion:
+              type: "string"
+            APIVersion:
+              type: "string"
+      TermsConditionsVersion:
+        type: "number"
+    additionalProperties: false
+  request:
+    required:
+    - "SupportedVersion"
+    - "TermsConditionsVersion"
+    type: "object"
+    properties:
+      SupportedVersion:
+        type: "object"
+        required:
+        - "OperatingSystemName"
+        - "OperatingSystemVersion"
+        - "MobileAppVersion"
+        - "APIVersion"
+        properties:
+          OperatingSystemName:
+            enum:
+            - "Android"
+            - "iOS"
+            type: "string"
+          OperatingSystemVersion:
+            type: "string"
+          MobileAppVersion:
+            type: "string"
+          APIVersion:
+            type: "string"
+      TermsConditionsVersion:
+        type: "number"
+    additionalProperties: false
+tags: []

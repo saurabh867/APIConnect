@@ -1,0 +1,276 @@
+---
+swagger: "2.0"
+info:
+  x-ibm-name: "investment-account"
+  title: "Investment Account"
+  version: "1.0.0"
+schemes:
+- "https"
+host: "$(catalog.host)"
+basePath: "/investment-account"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+securityDefinitions:
+  ClientSecret:
+    type: "apiKey"
+    description: ""
+    in: "header"
+    name: "X-IBM-Client-Secret"
+  clientIdHeader:
+    type: "apiKey"
+    in: "header"
+    name: "X-IBM-Client-Id"
+security:
+- clientIdHeader: []
+  ClientSecret: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - gatewayscript:
+        title: "GS_CheckHeaders"
+        version: "1.0.0"
+        source: "var Authorization = apim.getvariable('message.headers.Authorization');\r\
+          \n\r\nvar Mock_response = apim.getvariable('message.headers.Mock');\r\n\r\
+          \napim.setvariable('mockResponse',false)\r\n\r\nif(Mock_response!=null ||\
+          \ Mock_response!=undefined)\r\n{\r\n    if(Mock_response==\"true\" || Mock_response==\"\
+          True\" )\r\n    {\r\n        apim.setvariable('mockResponse',true)\r\n \
+          \   }\r\n   \r\n}\r\n\r\nif(Authorization)\r\n{\r\n    apim.setvariable('HeadersCheck',true);\r\
+          \n   \r\n}\r\nelse\r\n{\r\n    apim.setvariable('HeadersCheck',false);\r\
+          \n      \r\n}\r\n"
+        description: "check if mandatory headers are present"
+    - if:
+        title: "if"
+        condition: "apim.getvariable('HeadersCheck')==false"
+        execute:
+        - throw:
+            title: "throw"
+            version: "1.0.0"
+            name: "HeaderError"
+            message: "400 Bad Request"
+        version: "1.0.0"
+    - jwt-validate:
+        title: "jwt-validate"
+        jwt: "request.headers.authorization"
+        output-claims: "decoded.claims"
+        version: "1.0.0"
+    - switch:
+        title: "switch"
+        case:
+        - condition: "$(mockResponse)==true"
+          execute:
+          - map:
+              title: "map"
+              inputs: {}
+              outputs:
+                output:
+                  schema:
+                    $ref: "#/definitions/GetAccounts_ResponseSchema"
+                  variable: "message.body"
+                  content: "application/json"
+              actions:
+              - set: "output.InvestmentAccounts.Account.AccountNumber"
+                foreach:
+                - target: "output.InvestmentAccounts"
+                default: "80379267"
+              - set: "output.InvestmentAccounts.Account.SortCode"
+                foreach:
+                - target: "output.InvestmentAccounts"
+                default: "263324"
+              - set: "output.InvestmentAccounts.Account.GlobalAccountType"
+                foreach:
+                - target: "output.InvestmentAccounts"
+                default: "Savings"
+              - set: "output.InvestmentAccounts.Account.AccountBalance"
+                foreach:
+                - target: "output.InvestmentAccounts"
+                default: 200000
+              - set: "output.InvestmentAccounts.Account.AvailableBalance"
+                foreach:
+                - target: "output.InvestmentAccounts"
+                default: 190000
+              - set: "output.InvestmentAccounts.Account.AccountHolderName"
+                foreach:
+                - target: "output.InvestmentAccounts"
+                default: "CBSTestAccount"
+              - set: "output.Pagination.Itemlimit"
+                default: 1
+              - set: "output.Pagination.PageNumber"
+                default: 1
+              - set: "output.Pagination.TotalNumberOfItems"
+                default: 1
+              - set: "output.Pagination.TotalNumberOfPages"
+                default: 1
+              version: "1.0.0"
+              options:
+                includeEmptyXMLElements: false
+                namespaceInheritance: false
+        - condition: "$(mockResponse)==false "
+          execute:
+          - invoke:
+              title: "invoke"
+              timeout: 60
+              verb: "GET"
+              cache-response: "protocol"
+              cache-ttl: 900
+              stop-on-error:
+              - null
+              version: "1.0.0"
+              target-url: "http://investmentaccountservice-alb-688497626.eu-west-2.elb.amazonaws.com/investment-account/v1/accounts"
+        version: "1.0.0"
+    catch:
+    - errors:
+      - "HeaderError"
+      execute:
+      - set-variable:
+          title: "set400"
+          actions:
+          - set: "message.status.code"
+            value: "400 Invalid Headers"
+          version: "1.0.0"
+      - map:
+          title: "mapErrorResponse"
+          inputs: {}
+          outputs:
+            output:
+              schema:
+                $ref: "#/definitions/Error Schema"
+              variable: "message.body"
+              content: "application/json"
+          actions:
+          - set: "output.Errors.ErrorCode"
+            foreach:
+            - target: "output.Errors"
+            default: "1000"
+          - set: "output.Errors.Message"
+            foreach:
+            - target: "output.Errors"
+            default: "Invalid Request Headers"
+          version: "1.0.0"
+          options:
+            namespaceInheritance: false
+            includeEmptyXMLElements: false
+    - default:
+      - set-variable:
+          title: "set500"
+          actions:
+          - set: "message.status.code"
+            value: "500"
+          - clear: "message.body"
+          version: "1.0.0"
+  phase: "realized"
+paths:
+  /v1/accounts:
+    get:
+      responses:
+        200:
+          description: "200 OK"
+      parameters:
+      - name: "pg"
+        type: "integer"
+        required: true
+        in: "query"
+        description: "Indicates the page number to be retrieved"
+        format: "int64"
+      - name: "limit"
+        type: "integer"
+        required: true
+        in: "query"
+        description: "Number of items to be retrieved per page."
+        format: "int64"
+      - name: "Authorization"
+        type: "string"
+        required: true
+        in: "header"
+        description: "This is the jwt token which will have user name inside it."
+      - name: "Mock"
+        type: "string"
+        required: true
+        in: "header"
+definitions:
+  GetAccounts_ResponseSchema:
+    required:
+    - "InvestmentAccounts"
+    - "Pagination"
+    type: "object"
+    properties:
+      InvestmentAccounts:
+        type: "array"
+        items:
+          properties:
+            Account:
+              type: "object"
+              required:
+              - "AccountNumber"
+              - "SortCode"
+              - "GlobalAccountType"
+              - "AccountBalance"
+              - "AvailableBalance"
+              - "AccountHolderName"
+              properties:
+                AccountExternalIdentifier:
+                  type: "string"
+                AccountNumber:
+                  pattern: "^\\d{8,10}$"
+                  type: "string"
+                SortCode:
+                  pattern: "^\\d{6}$"
+                  type: "string"
+                GlobalAccountType:
+                  enum:
+                  - "Current"
+                  - "Savings"
+                  - "Mortgage"
+                  - "Loan"
+                  - "Tessa"
+                  - "Suspense"
+                  - "Individual Savings"
+                  - "Insurance"
+                  type: "string"
+                AccountBalance:
+                  pattern: "^\\d+([.]\\d{1,2})*$"
+                  type: "number"
+                AvailableBalance:
+                  pattern: "^\\d+([.]\\d{1,2})*$"
+                  type: "number"
+                AccountHolderName:
+                  pattern: "^[a-zA-Z0-9!\\£\\/$%& \\-\\<>\\'\\;\\:\\(\\)_=+,.\\?@]{0,45}$"
+                  type: "string"
+      Pagination:
+        required:
+        - "Itemlimit"
+        - "PageNumber"
+        - "TotalNumberOfItems"
+        - "TotalNumberOfPages"
+        type: "object"
+        properties:
+          Itemlimit:
+            type: "integer"
+          PageNumber:
+            type: "integer"
+          TotalNumberOfItems:
+            type: "integer"
+          TotalNumberOfPages:
+            type: "integer"
+    additionalProperties: false
+  Error Schema:
+    description: ""
+    type: "object"
+    properties:
+      Errors:
+        type: "array"
+        items:
+          properties:
+            ErrorCode:
+              type: "string"
+            Message:
+              type: "string"
+          type: "object"
+    example: "{\"Errors\":[{\"ErrorCode\":\"1001\",\"Message\":\"first error message\"\
+      },{\"ErrorCode\":\"1002\",\"Message\":\"second error message\"}]}"
+tags: []

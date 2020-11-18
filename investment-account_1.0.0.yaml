@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  x-ibm-name: "investment-account"
+  x-ibm-name1: "investment-account"
   title: "Investment Account"
   version: "1.0.0"
 schemes:

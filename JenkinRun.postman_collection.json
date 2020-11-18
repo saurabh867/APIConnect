@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "0f1bc97a-b060-4714-8652-3586682f0fc6",
+		"name": "JenkinRun",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Investment-Account Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f488954f-dc9f-462f-89e5-322d8b1f6295",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2MDQ5MTgwNDYsImV4cCI6MTYzNjQ1NDA1MSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.ND8fYvVd7_D_miYUxmXasbgwInv5TbvYvWH2ARMSpMI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-IBM-Client-Id",
+						"value": "4415a63a-e6d2-41e2-bbcb-16670ff1e9d2",
+						"type": "text"
+					},
+					{
+						"key": "X-IBM-Client-Secret",
+						"value": "J7lO0uR3oJ4nQ1eU7oW6sS1cI8bT8cC7jM7jB5nG4tS1wC4tB5",
+						"type": "text"
+					},
+					{
+						"key": "Mock",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.eu-gb.apiconnect.appdomain.cloud/saurabhgargthecoventrycouk-dev/sb/investment-account/v1/accounts",
+					"protocol": "https",
+					"host": [
+						"api",
+						"eu-gb",
+						"apiconnect",
+						"appdomain",
+						"cloud"
+					],
+					"path": [
+						"saurabhgargthecoventrycouk-dev",
+						"sb",
+						"investment-account",
+						"v1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Mobile app",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71d48f6e-a388-4e0b-a56c-032deca6b648",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2MDQ5MTgwNDYsImV4cCI6MTYzNjQ1NDA1MSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.ND8fYvVd7_D_miYUxmXasbgwInv5TbvYvWH2ARMSpMI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-IBM-Client-Id",
+						"value": "4415a63a-e6d2-41e2-bbcb-16670ff1e9d2",
+						"type": "text"
+					},
+					{
+						"key": "X-IBM-Client-Secret",
+						"value": "J7lO0uR3oJ4nQ1eU7oW6sS1cI8bT8cC7jM7jB5nG4tS1wC4tB5",
+						"type": "text"
+					},
+					{
+						"key": "Mock",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.eu-gb.apiconnect.appdomain.cloud/saurabhgargthecoventrycouk-dev/sb/mobile-app/v1/versions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"eu-gb",
+						"apiconnect",
+						"appdomain",
+						"cloud"
+					],
+					"path": [
+						"saurabhgargthecoventrycouk-dev",
+						"sb",
+						"mobile-app",
+						"v1",
+						"versions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Mobile app",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3d82f62-41cd-4c13-bf27-8c41ba69f395",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2MDQ5MTgwNDYsImV4cCI6MTYzNjQ1NDA1MSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.ND8fYvVd7_D_miYUxmXasbgwInv5TbvYvWH2ARMSpMI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-IBM-Client-Id",
+						"type": "text",
+						"value": "4415a63a-e6d2-41e2-bbcb-16670ff1e9d2"
+					},
+					{
+						"key": "X-IBM-Client-Secret",
+						"type": "text",
+						"value": "J7lO0uR3oJ4nQ1eU7oW6sS1cI8bT8cC7jM7jB5nG4tS1wC4tB5"
+					},
+					{
+						"key": "Mock",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SupportedVersion\": {\r\n    \"OperatingSystemName\": \"Android\",\r\n    \"OperatingSystemVersion\": \"debnibwai\",\r\n    \"MobileAppVersion\": \"ugdediesa\",\r\n    \"APIVersion\": \"pacuvabocutbac\"\r\n  },\r\n  \"TermsConditionsVersion\": 53.48610771\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.eu-gb.apiconnect.appdomain.cloud/saurabhgargthecoventrycouk-dev/sb/mobile-app/v1/versions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"eu-gb",
+						"apiconnect",
+						"appdomain",
+						"cloud"
+					],
+					"path": [
+						"saurabhgargthecoventrycouk-dev",
+						"sb",
+						"mobile-app",
+						"v1",
+						"versions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

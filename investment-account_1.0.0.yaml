@@ -93,7 +93,7 @@ x-ibm-configuration:
               - set: "output.InvestmentAccounts.Account.AvailableBalance"
                 foreach:
                 - target: "output.InvestmentAccounts"
-                default: 190000
+                default: 19000
               - set: "output.InvestmentAccounts.Account.AccountHolderName"
                 foreach:
                 - target: "output.InvestmentAccounts"

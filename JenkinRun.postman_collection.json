@@ -36,12 +36,12 @@
 				"header": [
 					{
 						"key": "X-IBM-Client-Id",
-						"value": "4415a63a-e6d2-41e2-bbcb-16670ff1e9d2",
+						"value": "e0e54103-ff3b-41ed-beca-3349a789eed2",
 						"type": "text"
 					},
 					{
 						"key": "X-IBM-Client-Secret",
-						"value": "J7lO0uR3oJ4nQ1eU7oW6sS1cI8bT8cC7jM7jB5nG4tS1wC4tB5",
+						"value": "gM6jB5vY7pM8bD4jG3bG1eU6uA4rY1sK8jV4wG8gC7qD1hI6fG",
 						"type": "text"
 					},
 					{
@@ -102,12 +102,12 @@
 				"header": [
 					{
 						"key": "X-IBM-Client-Id",
-						"value": "4415a63a-e6d2-41e2-bbcb-16670ff1e9d2",
+						"value": "e0e54103-ff3b-41ed-beca-3349a789eed2",
 						"type": "text"
 					},
 					{
 						"key": "X-IBM-Client-Secret",
-						"value": "J7lO0uR3oJ4nQ1eU7oW6sS1cI8bT8cC7jM7jB5nG4tS1wC4tB5",
+						"value": "gM6jB5vY7pM8bD4jG3bG1eU6uA4rY1sK8jV4wG8gC7qD1hI6fG",
 						"type": "text"
 					},
 					{
@@ -169,12 +169,12 @@
 					{
 						"key": "X-IBM-Client-Id",
 						"type": "text",
-						"value": "4415a63a-e6d2-41e2-bbcb-16670ff1e9d2"
+						"value": "e0e54103-ff3b-41ed-beca-3349a789eed2"
 					},
 					{
 						"key": "X-IBM-Client-Secret",
 						"type": "text",
-						"value": "J7lO0uR3oJ4nQ1eU7oW6sS1cI8bT8cC7jM7jB5nG4tS1wC4tB5"
+						"value": "gM6jB5vY7pM8bD4jG3bG1eU6uA4rY1sK8jV4wG8gC7qD1hI6fG"
 					},
 					{
 						"key": "Mock",

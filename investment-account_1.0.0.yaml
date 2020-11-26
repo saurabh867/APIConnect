@@ -81,7 +81,7 @@ x-ibm-configuration:
               - set: "output.InvestmentAccounts.Account.SortCode"
                 foreach:
                 - target: "output.InvestmentAccounts"
-                default: "263324"
+                default: "263323"
               - set: "output.InvestmentAccounts.Account.GlobalAccountType"
                 foreach:
                 - target: "output.InvestmentAccounts"
